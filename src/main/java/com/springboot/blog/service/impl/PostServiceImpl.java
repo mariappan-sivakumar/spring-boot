@@ -121,6 +121,11 @@ public class PostServiceImpl implements PostService {
         Category category=categoryRepository.findById(categoryId).orElseThrow(()->new ResourceNotFoundException("Category","id",categoryId));
         List<Post> posts=postRepository.findByCategoryId(categoryId);
         return posts.stream().map(post -> mapper.map(post, PostDto.class)).collect(Collectors.toList());
+    }
 
+    @Override
+    public List<PostDto> searchPost(String query) {
+        List<Post> posts=postRepository.searchPost(query);
+        return posts.stream().map(post -> mapper.map(post, PostDto.class)).collect(Collectors.toList());
     }
 }
